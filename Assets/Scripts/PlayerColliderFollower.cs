@@ -23,7 +23,7 @@ public class PlayerColliderFollower : MonoBehaviour {
     #endregion MonoBehaviour
 
     /// <summary>
-    /// PlayerFollower
+    /// Keep the collider follows the player (VR Camera)
     /// </summary>
     private void PlayerFollower()
     {

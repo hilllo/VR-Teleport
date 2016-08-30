@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.VR;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TeleportManager : Singleton<TeleportManager> {
 
@@ -19,19 +20,25 @@ public class TeleportManager : Singleton<TeleportManager> {
     private GameObject PortalExitPointCube;
 
     /// <summary>
-    /// The CameraRig.
+    /// The transform of CameraRig.
     /// </summary>
     [SerializeField]
     private Transform CameraRigTrans;
 
     /// <summary>
-    /// The PortalExitPoint.
+    /// The Image of BlockoutPanel.
     /// </summary>
     [SerializeField]
-    private Transform PortalExitPointTrans;
+    private Image BlockoutPanelImage;
 
     /// <summary>
-    /// The PlayerCollider.
+    /// Fading duration.
+    /// </summary>
+    [SerializeField]
+    private float FlashingDuration = 0.5f;
+
+    /// <summary>
+    /// Is true when the player has teleported.
     /// </summary>
     private bool HasTeleported = false;
 
@@ -53,26 +60,34 @@ public class TeleportManager : Singleton<TeleportManager> {
     #endregion MonoBehaviour
 
     #region Teleport
+    public void Teleport(Vector3 destination)
+    {
+        if (this.HasTeleported)
+            return;
+
+        HasTeleported = true;
+        SteamVR_Fade.Start(Color.black, 0.0f);
+        this.StartCoroutine(this.TeleportCoroutine(destination));
+    }
+
 
     /// <summary>
     /// Trigger whenever OnTriggerStay or OnTriggerEnter
     /// </summary>
-    public void Teleport()
+    public IEnumerator TeleportCoroutine(Vector3 destination)
     {
-        if (HasTeleported)
-            return;
-                
-        Vector3 destination = PortalExitPointTrans.position;
+        SteamVR_Fade.Start(Color.white, this.FlashingDuration / 2.0f);
+        yield return new WaitForSeconds(this.FlashingDuration / 2.0f);
+
         Vector3 offset = CameraRigTrans.position - InputTracking.GetLocalPosition(VRNode.Head);
         destination += offset;
-        Debug.Log(offset.ToString());
         destination.y = CameraRigTrans.position.y;
 
-        Debug.Log(string.Format("Portal Destination: {0}", destination.ToString()));
-        CameraRigTrans.position = destination;
+        //Debug.Log(string.Format("Portal Destination: {0}", destination.ToString()));
+        this.CameraRigTrans.position = destination;
 
-        HasTeleported = true;
+        SteamVR_Fade.Start(Color.clear, this.FlashingDuration / 2.0f);
+        //this.HasTeleported = false;
     }
-
     #endregion Teleport
 }

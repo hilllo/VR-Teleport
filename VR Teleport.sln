@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VR Teleport.CSharp", "VR Teleport.CSharp.csproj", "{221F33DC-F160-F701-DAA9-89CE656B4FF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VR Teleport.CSharp.Editor", "VR Teleport.CSharp.Editor.csproj", "{222F3093-190C-AD83-5EBE-563C0E6ABFA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{221F33DC-F160-F701-DAA9-89CE656B4FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221F33DC-F160-F701-DAA9-89CE656B4FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221F33DC-F160-F701-DAA9-89CE656B4FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221F33DC-F160-F701-DAA9-89CE656B4FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222F3093-190C-AD83-5EBE-563C0E6ABFA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{222F3093-190C-AD83-5EBE-563C0E6ABFA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222F3093-190C-AD83-5EBE-563C0E6ABFA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{222F3093-190C-AD83-5EBE-563C0E6ABFA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
