@@ -10,38 +10,32 @@ public class PortalEnterPoint : MonoBehaviour {
     /// The PlayerCollider.
     /// </summary>
     [SerializeField]
-    private Collider PlayerCollider;
+    private Collider _PlayerCollider;
 
     /// <summary>
     /// The PortalExitPoint.
     /// </summary>
     [SerializeField]
-    private Transform PortalExitPointTrans;
+    private Transform _PortalExitPointTrans;
 
     #endregion Fields
 
     #region Collide
 
     /// <summary>
-    /// OnTriggerEnter
-    /// </summary>
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other == this.PlayerCollider)
-            TeleportManager.Instance.Teleport(PortalExitPointTrans.position);
-
-        Debug.Log(other.gameObject.name.ToString());
-    }
-
-    /// <summary>
     /// OnTriggerStay
     /// </summary>
     public void OnTriggerStay(Collider other)
     {
-        if (other == this.PlayerCollider)
-            TeleportManager.Instance.Teleport(PortalExitPointTrans.position);
+        if (other == null)
+            return;
 
-        Debug.Log(other.gameObject.name.ToString());
+        //Debug.Log(string.Format("Collider: {0}{1}", other.gameObject.name.ToString(),other.gameObject.GetInstanceID().ToString()));
+        if (other == this._PlayerCollider && !TeleportManager.Instance.IsTeleporting)
+        {
+            Debug.Log(string.Format("Start teleporting"));
+            TeleportManager.Instance.Teleport(this._PortalExitPointTrans.position);
+        }
     }
 
     #endregion Collide

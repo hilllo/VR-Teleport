@@ -7,10 +7,9 @@ public class PlayerColliderFollower : MonoBehaviour {
     #region Fields
 
     /// <summary>
-    /// The transform of CameraRig.
+    /// The position of CameraRig.
     /// </summary>
-    [SerializeField]
-    private Transform CameraRigTrans;
+    private Vector3 _Offset = new Vector3(0.0f, 0.0f, 0.0f);
 
     #endregion Fields
 
@@ -38,9 +37,17 @@ public class PlayerColliderFollower : MonoBehaviour {
     private void PlayerFollower()
     {
         Vector3 headPos = InputTracking.GetLocalPosition(VRNode.CenterEye);
-        headPos += CameraRigTrans.position;
+        headPos += this._Offset;
         headPos.y = 0.0f;
         //Debug.Log(headPos.ToString());
         this.transform.position = headPos;
+    }
+
+    /// <summary>
+    /// Update Offset (CameraRig position)
+    /// </summary>
+    public void UpdateOffset(Vector3 newOffset)
+    {
+        this._Offset = newOffset;
     }
 }

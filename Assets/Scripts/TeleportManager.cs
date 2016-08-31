@@ -11,39 +11,55 @@ public class TeleportManager : Singleton<TeleportManager> {
     /// The GameObject of PortalEnterPointCube.
     /// </summary>
     [SerializeField]
-    private GameObject PortalEnterPointCube;
+    private GameObject _PortalEnterPointCube;
 
     /// <summary>
     /// The GameObject of PortalExitPointCube.
     /// </summary>
     [SerializeField]
-    private GameObject PortalExitPointCube;
+    private GameObject _PortalExitPointCube;
 
     /// <summary>
     /// The transform of CameraRig.
     /// </summary>
     [SerializeField]
-    private Transform CameraRigTrans;
+    private Transform _CameraRigTrans;
 
     /// <summary>
-    /// The Image of BlockoutPanel.
+    /// PlayerColliderFollower
     /// </summary>
     [SerializeField]
-    private Image BlockoutPanelImage;
+    private PlayerColliderFollower _PlayerColliderFollower;
 
     /// <summary>
     /// Fading duration.
     /// </summary>
     [SerializeField]
-    private float FlashingDuration = 0.5f;
+    private float _FlashingDuration = 0.5f;
+
+    /// <summary>
+    /// Backfield of IsTeleporting Property. Is true when the player has teleported.
+    /// </summary>
+    private bool _IsTeleporting = false;
+
+    #endregion Fields
 
     /// <summary>
     /// Is true when the player has teleported.
     /// </summary>
-    private bool HasTeleported = false;
+    public bool IsTeleporting
+    {
+        get
+        {
+            return this._IsTeleporting;
+        }
+    }
+
+    #region Properties
 
 
-    #endregion Fields
+
+    #endregion Properties
 
     #region MonoBehaviour
 
@@ -53,8 +69,8 @@ public class TeleportManager : Singleton<TeleportManager> {
     void Start()
     {
         // Change color of points
-        this.PortalEnterPointCube.GetComponent<Renderer>().material.color = Color.green;
-        this.PortalExitPointCube.GetComponent<Renderer>().material.color = Color.red;
+        this._PortalEnterPointCube.GetComponent<Renderer>().material.color = Color.green;
+        this._PortalExitPointCube.GetComponent<Renderer>().material.color = Color.red;
     }
 
     #endregion MonoBehaviour
@@ -62,11 +78,7 @@ public class TeleportManager : Singleton<TeleportManager> {
     #region Teleport
     public void Teleport(Vector3 destination)
     {
-        if (this.HasTeleported)
-            return;
-
-        HasTeleported = true;
-        SteamVR_Fade.Start(Color.black, 0.0f);
+        this._IsTeleporting = true;
         this.StartCoroutine(this.TeleportCoroutine(destination));
     }
 
@@ -76,18 +88,19 @@ public class TeleportManager : Singleton<TeleportManager> {
     /// </summary>
     public IEnumerator TeleportCoroutine(Vector3 destination)
     {
-        SteamVR_Fade.Start(Color.white, this.FlashingDuration / 2.0f);
-        yield return new WaitForSeconds(this.FlashingDuration / 2.0f);
+        SteamVR_Fade.Start(Color.white, this._FlashingDuration / 2.0f);
+        yield return new WaitForSeconds(this._FlashingDuration / 2.0f);
 
-        Vector3 offset = CameraRigTrans.position - InputTracking.GetLocalPosition(VRNode.Head);
-        destination += offset;
-        destination.y = CameraRigTrans.position.y;
+        //Vector3 offset = this._CameraRigTrans.position - InputTracking.GetLocalPosition(VRNode.Head);
+        //destination += offset;
+        destination.y = this._CameraRigTrans.position.y;
 
         //Debug.Log(string.Format("Portal Destination: {0}", destination.ToString()));
-        this.CameraRigTrans.position = destination;
+        this._CameraRigTrans.position = destination;
+        this._PlayerColliderFollower.UpdateOffset(this._CameraRigTrans.position);
 
-        SteamVR_Fade.Start(Color.clear, this.FlashingDuration / 2.0f);
-        //this.HasTeleported = false;
+        SteamVR_Fade.Start(Color.clear, this._FlashingDuration / 2.0f);
+        this._IsTeleporting = false;
     }
     #endregion Teleport
 }
