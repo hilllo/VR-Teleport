@@ -68,9 +68,6 @@ public class TeleportManager : Singleton<TeleportManager> {
     /// </summary>
     void Start()
     {
-        // Change color of points
-        this._PortalEnterPointCube.GetComponent<Renderer>().material.color = Color.green;
-        this._PortalExitPointCube.GetComponent<Renderer>().material.color = Color.red;
     }
 
     #endregion MonoBehaviour
