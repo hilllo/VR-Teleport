@@ -17,6 +17,10 @@ public class PickableObject : InteractableObject {
     [SerializeField]
     private float _RotationFactor = 600f;
 
+    /// <summary>
+    /// Backing field of rigidbody
+    /// </summary>
+    [SerializeField]
     private Rigidbody _Rigidbody;
 
     #endregion Fields
@@ -29,7 +33,6 @@ public class PickableObject : InteractableObject {
     protected override void OnStart()
     {
         base.OnStart();
-        this._Rigidbody = this.GetComponent<Rigidbody>();
 
         if (this._Rigidbody.mass <= 0)
             throw new System.ArgumentException(string.Format("Expected {0}.Rigidbody.mass > 0 to get the correct picking effect.", this.gameObject.name));

@@ -100,7 +100,7 @@ public class InteractableObject : MonoBehaviour {
         if(this._AttachedWand == wand)
         {
             this._AttachedWand = null;
-            this._IsInteracting = true;
+            this._IsInteracting = false;
         }
     }
 

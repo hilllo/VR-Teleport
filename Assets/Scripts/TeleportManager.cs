@@ -26,6 +26,12 @@ public class TeleportManager : Singleton<TeleportManager> {
     private Transform _CameraRigTrans;
 
     /// <summary>
+    /// The transform of CameraRig.
+    /// </summary>
+    [SerializeField]
+    private Transform _CameraEyeTrans;
+
+    /// <summary>
     /// PlayerColliderFollower
     /// </summary>
     [SerializeField]
@@ -88,8 +94,8 @@ public class TeleportManager : Singleton<TeleportManager> {
         SteamVR_Fade.Start(Color.white, this._FlashingDuration / 2.0f);
         yield return new WaitForSeconds(this._FlashingDuration / 2.0f);
 
-        //Vector3 offset = this._CameraRigTrans.position - InputTracking.GetLocalPosition(VRNode.Head);
-        //destination += offset;
+        Vector3 offset = this._CameraRigTrans.position - this._CameraEyeTrans.position;
+        destination += offset;
         destination.y = this._CameraRigTrans.position.y;
 
         //Debug.Log(string.Format("Portal Destination: {0}", destination.ToString()));

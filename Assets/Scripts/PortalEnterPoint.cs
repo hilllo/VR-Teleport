@@ -27,13 +27,13 @@ public class PortalEnterPoint : MonoBehaviour {
     /// </summary>
     public void OnTriggerStay(Collider other)
     {
-        if (other == null)
+        if (other == null && TeleportManager.Instance.IsTeleporting)
             return;
 
         //Debug.Log(string.Format("Collider: {0}{1}", other.gameObject.name.ToString(),other.gameObject.GetInstanceID().ToString()));
-        if (other == this._PlayerCollider && !TeleportManager.Instance.IsTeleporting)
+        if (other == this._PlayerCollider)
         {
-            Debug.Log(string.Format("Start teleporting"));
+            Debug.Log(string.Format("Start teleporting to {0}", this._PortalExitPointTrans.position.ToString()));
             TeleportManager.Instance.Teleport(this._PortalExitPointTrans.position);
         }
     }
