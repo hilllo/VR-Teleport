@@ -15,7 +15,7 @@ public class PickableObject : InteractableObject {
     /// RotationFactor, affects the feeling of picking
     /// </summary>
     [SerializeField]
-    private float _RotationFactor = 400f;
+    private float _RotationFactor = 600f;
 
     private Rigidbody _Rigidbody;
 

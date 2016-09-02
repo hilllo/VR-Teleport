@@ -124,6 +124,7 @@ public class WandController : MonoBehaviour {
         }
 
         this._InteractingObject = this._ClosestObject;
+        this._ClosestObject = null;
 
         if(this._InteractingObject != null)
         {
